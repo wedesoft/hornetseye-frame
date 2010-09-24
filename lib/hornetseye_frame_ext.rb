@@ -16,4 +16,5 @@
 
 require 'multiarray'
 require 'hornetseye-frame/fourcc'
+require 'hornetseye-frame/frame'
 
