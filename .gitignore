@@ -1,0 +1,8 @@
+doc
+hornetseye-frame-*.tar.*
+pkg
+.yardoc
+*~
+*.gem
+*.swp
+
