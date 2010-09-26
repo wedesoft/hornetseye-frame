@@ -109,6 +109,10 @@ module Hornetseye
         Hornetseye::Frame( typecode, width, height ).new
       end
 
+      def import( typecode, width, height, memory )
+        Hornetseye::Frame( typecode, width, height ).new memory
+      end
+
       def typesize( typecode, width, height )
         Hornetseye::Frame( typecode, width, height ).typesize
       end
