@@ -13,27 +13,28 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
+#ifndef FRAME_HH
+#define FRAME_HH
+
+#include <boost/smart_ptr.hpp>
 #include <ruby.h>
-#include "colourspace.hh"
+#include <string>
 
-#ifdef WIN32
-#define DLLEXPORT __declspec(dllexport)
-#define DLLLOCAL
-#else
-#define DLLEXPORT __attribute__ ((visibility("default")))
-#define DLLLOCAL __attribute__ ((visibility("hidden")))
+class Frame
+{
+public:
+  Frame( const std::string &typecode, int width, int height, char *data = NULL );
+  Frame( VALUE rbFrame ): m_frame( rbFrame ) {}
+  virtual ~Frame(void) {}
+  std::string typecode(void);
+  int width(void);
+  int height(void);
+  char *data(void);
+  VALUE rubyObject(void) { return m_frame; }
+protected:
+  VALUE m_frame;
+};
+
+typedef boost::shared_ptr< Frame > FramePtr;
+
 #endif
-
-extern "C" DLLEXPORT void Init_hornetseye_frame(void);
-
-extern "C" {
-
-  void Init_hornetseye_frame(void)
-  {
-    VALUE rbHornetseye = rb_define_module( "Hornetseye" );
-    VALUE cFrame = rb_define_class_under( rbHornetseye, "Frame_", rb_cObject );
-    rb_define_method( cFrame, "to_type", RUBY_METHOD_FUNC( frameWrapToType ), 1 );
-    rb_require( "hornetseye_frame_ext.rb" );
-  }
-
-}

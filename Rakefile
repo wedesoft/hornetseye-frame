@@ -6,7 +6,7 @@ require 'rake/packagetask'
 require 'rbconfig'
 
 PKG_NAME = 'hornetseye-frame'
-PKG_VERSION = '0.1.0'
+PKG_VERSION = '0.2.0'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -113,7 +113,7 @@ begin
     s.extra_rdoc_files = []
     s.rdoc_options = %w{--no-private}
     s.add_dependency %<malloc>, [ '~> 1.1' ]
-    s.add_dependency %<multiarray>, [ '~> 0.5' ]
+    s.add_dependency %<multiarray>, [ '~> 0.6' ]
     s.add_development_dependency %q{rake}
   end
   GEM_SOURCE = "#{PKG_NAME}-#{PKG_VERSION}.gem"
@@ -135,7 +135,7 @@ begin
     s.extra_rdoc_files = []
     s.rdoc_options = %w{--no-private}
     s.add_dependency %q<malloc>, [ '~> 1.1' ]
-    s.add_dependency %<multiarray>, [ '~> 0.5' ]
+    s.add_dependency %<multiarray>, [ '~> 0.6' ]
   end
   GEM_BINARY = "#{PKG_NAME}-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
   desc "Build the gem file #{GEM_SOURCE}"
@@ -166,8 +166,11 @@ rule '.o' => '.cc' do |t|
    sh "#{CXX} #{$CXXFLAGS} -c -o #{t.name} #{t.source}"
 end
 
-# file 'ext/error.o' => [ 'ext/error.cc', 'ext/error.hh' ]
-# file 'ext/malloc.o' => [ 'ext/malloc.cc', 'ext/malloc.hh', 'ext/error.hh' ]
+file 'ext/frame.o' => [ 'ext/frame.cc', 'ext/frame.hh' ]
+file 'ext/colourspace.o' => [ 'ext/colourspace.cc', 'ext/colourspace.hh',
+                              'ext/frame.hh', 'ext/error.hh' ]
+file 'ext/init.o' => [ 'ext/init.cc', 'ext/frame.hh', 'ext/colourspace.hh',
+                       'ext/error.hh' ]
 
 CLEAN.include 'ext/*.o'
 CLOBBER.include SO_FILE, 'doc', '.yardoc'

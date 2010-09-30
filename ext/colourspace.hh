@@ -13,27 +13,17 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-#include <ruby.h>
-#include "colourspace.hh"
+#ifndef COLOURSPACE_HH
+#define COLOURSPACE_HH
 
-#ifdef WIN32
-#define DLLEXPORT __declspec(dllexport)
-#define DLLLOCAL
-#else
-#define DLLEXPORT __attribute__ ((visibility("default")))
-#define DLLLOCAL __attribute__ ((visibility("hidden")))
+#include <ruby.h>
+#include <string>
+#include "error.hh"
+#include "frame.hh"
+
+FramePtr frameToType( const FramePtr in, const std::string &target ) throw (Error);
+
+VALUE frameWrapToType( VALUE rbClass, VALUE rbTarget );
+
 #endif
 
-extern "C" DLLEXPORT void Init_hornetseye_frame(void);
-
-extern "C" {
-
-  void Init_hornetseye_frame(void)
-  {
-    VALUE rbHornetseye = rb_define_module( "Hornetseye" );
-    VALUE cFrame = rb_define_class_under( rbHornetseye, "Frame_", rb_cObject );
-    rb_define_method( cFrame, "to_type", RUBY_METHOD_FUNC( frameWrapToType ), 1 );
-    rb_require( "hornetseye_frame_ext.rb" );
-  }
-
-}

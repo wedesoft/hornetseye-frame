@@ -35,7 +35,7 @@ module Hornetseye
         [ @width, @height ]
       end
 
-      def typesize
+      def storage_size
         case typecode
         when BGR
           width * height * 3
@@ -44,14 +44,8 @@ module Hornetseye
         when YUY2
           widtha = ( width + 3 ) & ~0x3
           widtha * height * 2
-        when I420
-          width * height * 3 / 2
         when YV12
-          width2  = width.succ.div 2
-          height2 = height.succ.div 2
-          widtha  = ( width  + 7 ) & ~0x7
-          width2a = ( width2 + 7 ) & ~0x7
-          widtha * height + 2 * width2a * height2
+          width * height * 3 / 2
         when MJPG
           width * height * 2
         else
@@ -61,8 +55,10 @@ module Hornetseye
 
     end
 
+    attr_reader :memory
+
     def initialize( value = nil )
-      @memory = value || Malloc.new( self.class.typesize )
+      @memory = value || Malloc.new( self.class.storage_size )
     end
 
     def inspect
@@ -113,8 +109,8 @@ module Hornetseye
         Hornetseye::Frame( typecode, width, height ).new memory
       end
 
-      def typesize( typecode, width, height )
-        Hornetseye::Frame( typecode, width, height ).typesize
+      def storage_size( typecode, width, height )
+        Hornetseye::Frame( typecode, width, height ).storage_size
       end
 
     end
