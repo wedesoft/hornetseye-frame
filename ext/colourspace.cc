@@ -21,19 +21,6 @@ extern "C" {
 
 using namespace std;
 
-static enum PixelFormat stringToPixelFormat( const string &str ) throw (Error)
-{
-  enum PixelFormat retVal = PIX_FMT_NONE;
-  if ( str == "YV12" )
-    retVal = PIX_FMT_YUV420P;
-  else if ( str == "UBYTERGB" )
-    retVal = PIX_FMT_RGB24;
-  else {
-    ERRORMACRO( false, Error, , "Unsupported colourspace \"" << str << "\"" );
-  };
-  return retVal;
-}
-
 static void setupFormat( const string &typecode, int width, int height, char *memory,
                          enum PixelFormat *format,
                          uint8_t **data, int *lineSize ) throw (Error)

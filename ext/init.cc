@@ -32,7 +32,10 @@ extern "C" {
   {
     VALUE rbHornetseye = rb_define_module( "Hornetseye" );
     VALUE cFrame = rb_define_class_under( rbHornetseye, "Frame_", rb_cObject );
+    VALUE cNode = rb_define_class_under( rbHornetseye, "Node", rb_cObject );
     rb_define_method( cFrame, "to_type", RUBY_METHOD_FUNC( frameWrapToType ), 1 );
+    rb_define_method( cNode, "to_type_with_frame",
+                      RUBY_METHOD_FUNC( frameWrapToType ), 1 );
     rb_require( "hornetseye_frame_ext.rb" );
   }
 

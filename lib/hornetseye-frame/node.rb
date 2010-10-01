@@ -14,8 +14,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require 'malloc'
-require 'multiarray'
-require 'hornetseye-frame/fourcc'
-require 'hornetseye-frame/frame'
-require 'hornetseye-frame/node'
+# Namespace of Hornetseye computer vision library
+module Hornetseye
+
+  class Node
+
+    alias_method :orig_to_type_with_frame, :to_type_with_frame
+
+    def to_type_with_frame( typecode )
+      if typecode.is_a? FourCC
+        orig_to_type_with_frame typecode
+      else
+        to_type_without_frame typecode
+      end
+    end
+
+    alias_method_chain :to_type, :frame
+
+  end
+
+end
+
