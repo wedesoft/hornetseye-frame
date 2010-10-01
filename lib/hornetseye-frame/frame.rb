@@ -46,6 +46,8 @@ module Hornetseye
           widtha * height * 2
         when YV12
           width * height * 3 / 2
+        when I420
+          width * height * 3 / 2
         when MJPG
           width * height * 2
         else

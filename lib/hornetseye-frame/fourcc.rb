@@ -50,7 +50,7 @@ module Hornetseye
   BGR  = FourCC 'R', 'G', 'B', ' '
   UYVY = FourCC 'U', 'Y', 'V', 'Y'
   YUY2 = FourCC 'Y', 'U', 'Y', '2'
-  # I420 = FourCC 'I', '4', '2', '0'
+  I420 = FourCC 'I', '4', '2', '0'
   YV12 = FourCC 'Y', 'V', '1', '2'
   MJPG = FourCC 'M', 'J', 'P', 'G'
 
