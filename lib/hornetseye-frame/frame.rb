@@ -83,6 +83,19 @@ module Hornetseye
       self.class.height
     end
 
+    alias_method :orig_to_type, :to_type
+
+    def to_type( target )
+      if ( target < INT_ and target != UBYTE ) or target < FLOAT_ or
+        target < COMPLEX_
+        to_type( UBYTE ).to_type target
+      elsif target < RGB_ and target != UBYTERGB
+        to_type( UBYTERGB ).to_type target
+      else
+        orig_to_type target
+      end
+    end
+
   end
 
   def Frame( typecode, width, height )

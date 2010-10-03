@@ -21,11 +21,19 @@ module Hornetseye
 
     alias_method :orig_to_type_with_frame, :to_type_with_frame
 
-    def to_type_with_frame( typecode )
-      if typecode.is_a? FourCC
-        orig_to_type_with_frame typecode
+    def to_type_with_frame( target )
+      if target.is_a? FourCC
+        if ( typecode < INT_ and typecode != UBYTE ) or typecode < FLOAT_
+          to_type( UBYTE ).to_type target
+        elsif typecode < COMPLEX_
+          real.to_type target
+        elsif typecode < RGB_ and typecode != UBYTERGB
+          to_type( UBYTERGB ).to_type target
+        else
+          orig_to_type_with_frame target
+        end
       else
-        to_type_without_frame typecode
+        to_type_without_frame target
       end
     end
 
