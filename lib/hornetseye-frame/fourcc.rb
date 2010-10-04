@@ -48,6 +48,7 @@ module Hornetseye
   module_function :FourCC
 
   BGR  = FourCC 'B', 'G', 'R', ' '
+  BGRA = FourCC 'B', 'G', 'R', 'A'
   UYVY = FourCC 'U', 'Y', 'V', 'Y'
   YUY2 = FourCC 'Y', 'U', 'Y', '2'
   I420 = FourCC 'I', '4', '2', '0'

@@ -27,7 +27,7 @@ HOMEPAGE = %q{http://wedesoft.github.com/hornetseye-frame/}
 
 OBJ = CC_FILES.ext 'o'
 $CXXFLAGS = ENV[ 'CXXFLAGS' ] || ''
-$CXXFLAGS = "#{$CXXFLAGS} -fPIC"
+$CXXFLAGS = "#{$CXXFLAGS} -fPIC -DNDEBUG"
 if RbConfig::CONFIG[ 'rubyhdrdir' ]
   $CXXFLAGS += "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'rubyhdrdir' ]} " +
               "-I#{RbConfig::CONFIG[ 'rubyhdrdir' ]}/#{RbConfig::CONFIG[ 'arch' ]}"

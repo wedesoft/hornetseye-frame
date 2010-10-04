@@ -39,6 +39,8 @@ module Hornetseye
         case typecode
         when BGR
           width * height * 3
+        when BGRA
+          width * height * 4
         when UYVY
           width * height * 2
         when YUY2
@@ -86,11 +88,15 @@ module Hornetseye
     alias_method :orig_to_type, :to_type
 
     def to_type( target )
-      if ( target < INT_ and target != UBYTE ) or target < FLOAT_ or
-        target < COMPLEX_
-        to_type( UBYTE ).to_type target
-      elsif target < RGB_ and target != UBYTERGB
-        to_type( UBYTERGB ).to_type target
+      if target.is_a? Class
+        if ( target < INT_ and target != UBYTE ) or target < FLOAT_ or
+          target < COMPLEX_
+          to_type( UBYTE ).to_type target
+        elsif target < RGB_ and target != UBYTERGB
+          to_type( UBYTERGB ).to_type target
+        else
+          orig_to_type target
+        end
       else
         orig_to_type target
       end
