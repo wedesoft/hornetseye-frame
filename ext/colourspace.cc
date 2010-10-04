@@ -33,6 +33,10 @@ static void setupFormat( const string &typecode, int width, int height, char *me
     *format = PIX_FMT_RGB24;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = width * 3;
+  } else if ( typecode == "BGR " ) {
+    *format = PIX_FMT_BGR24;
+    data[ 0 ] = (uint8_t *)memory;
+    lineSize[ 0 ] = width * 3;
   } else if ( typecode == "YV12" ) {
     *format = PIX_FMT_YUV420P;
     int

@@ -23,7 +23,23 @@ Kernel::require 'hornetseye_frame'
 
 class TC_Frame < Test::Unit::TestCase
 
+  UBYTERGB = Hornetseye::UBYTERGB
+
+  BGR  = Hornetseye::BGR
+  UYVY = Hornetseye::UYVY
+  YUY2 = Hornetseye::YUY2
+  I420 = Hornetseye::I420
   YV12 = Hornetseye::YV12
+
+  F = Hornetseye::Frame
+
+  def C( *args )
+    Hornetseye::RGB *args
+  end
+
+  def M( *args )
+    Hornetseye::MultiArray *args
+  end
 
   def F( *args )
     Hornetseye::Frame *args
@@ -37,24 +53,44 @@ class TC_Frame < Test::Unit::TestCase
     assert_equal 'Frame(YV12,320,240)', F( YV12, 320, 240 ).to_s
   end
 
+  def test_frame_typecode
+    assert_equal YV12, F( YV12, 320, 240 ).typecode
+  end
+
+  def test_frame_width
+    assert_equal 320, F( YV12, 320, 240 ).width
+  end
+
+  def test_frame_height
+    assert_equal 240, F( YV12, 320, 240 ).height
+  end
+
   def test_frame_shape
     assert_equal [ 320, 240 ], F( YV12, 320, 240 ).shape
   end
 
   def test_typecode
-    assert_equal YV12, F( YV12, 320, 240 ).typecode
+    assert_equal YV12, F.new( YV12, 320, 240 ).typecode
   end
 
   def test_shape
-    assert_equal [ 320, 240 ], F( YV12, 320, 240 ).shape
+    assert_equal [ 320, 240 ], F.new( YV12, 320, 240 ).shape
   end
 
   def test_width
-    assert_equal 320, F( YV12, 320, 240 ).width
+    assert_equal 320, F.new( YV12, 320, 240 ).width
   end
 
   def test_height
-    assert_equal 240, F( YV12, 320, 240 ).height
+    assert_equal 240, F.new( YV12, 320, 240 ).height
+  end
+
+  def test_to_type
+    m = M( Hornetseye::UBYTERGB, 160, 120 ).new.fill! C( 32, 64, 128 )
+    [ UYVY, YUY2, I420, YV12 ].each do |c|
+      result = m.to_type( c ).to_type UBYTERGB
+      assert_equal ( m / 8.0 ).round, ( result / 8.0 ).round
+    end
   end
 
 end
