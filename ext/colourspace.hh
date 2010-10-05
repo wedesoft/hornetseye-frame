@@ -16,8 +16,8 @@
 #ifndef COLOURSPACE_HH
 #define COLOURSPACE_HH
 
-#include <ruby.h>
 #include <string>
+#include "rubyinc.hh"
 #include "error.hh"
 #include "frame.hh"
 
