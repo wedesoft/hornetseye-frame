@@ -19,3 +19,5 @@ require 'multiarray'
 require 'hornetseye-frame/fourcc'
 require 'hornetseye-frame/frame'
 require 'hornetseye-frame/node'
+require 'hornetseye-frame/shortcuts'
+
