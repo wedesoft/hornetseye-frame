@@ -1,6 +1,5 @@
 .depends.mf
 doc
-hornetseye-frame-*.tar.*
 pkg
 .yardoc
 *~

@@ -7,12 +7,12 @@ require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'hornetseye-frame'
-PKG_VERSION = '0.4.0'
+PKG_VERSION = '0.5.0'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
 CC_FILES = FileList[ 'ext/*.cc' ]
-HH_FILES = FileList[ 'ext/*.hh' ]
+HH_FILES = FileList[ 'ext/*.hh' ] + FileList[ 'ext/*.tcc' ]
 TC_FILES = FileList[ 'test/tc_*.rb' ]
 TS_FILES = FileList[ 'test/ts_*.rb' ]
 SO_FILE = "ext/#{PKG_NAME.tr '\-', '_'}.so"

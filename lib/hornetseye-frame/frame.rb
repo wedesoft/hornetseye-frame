@@ -85,6 +85,10 @@ module Hornetseye
       self.class.height
     end
 
+    def storage_size
+      self.class.storage_size
+    end
+
     alias_method :orig_to_type, :to_type
 
     def to_type( target )

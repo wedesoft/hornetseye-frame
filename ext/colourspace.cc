@@ -60,8 +60,8 @@ static void setupFormat( const string &typecode, int width, int height, char *me
       width2  = width / 2,
       height2 = height / 2;
     data[ 0 ] = (uint8_t *)memory;
-    data[ 2 ] = (uint8_t *)memory + width * height;
-    data[ 1 ] = (uint8_t *)data[ 2 ] + width2 * height2;
+    data[ 1 ] = (uint8_t *)memory + width * height;
+    data[ 2 ] = (uint8_t *)data[ 1 ] + width2 * height2;
     lineSize[ 0 ] = width;
     lineSize[ 1 ] = width2;
     lineSize[ 2 ] = width2;
