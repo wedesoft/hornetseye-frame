@@ -88,19 +88,25 @@ def check_program
   end
 end
 
-file 'ext/config.h' do |t|
-  s = "/* config.h. Generated from Rakefile by rake. */\n"
-  libswscale_incdir = check_program do |c|
+def check_c_header( name )
+  check_program do |c|
     c.puts <<EOS
 extern "C" {
-  #include <libswscale/swscale.h>
+  #include <#{name}>
 }
 int main(void) { return 0; }
 EOS
   end
-  if libswscale_incdir
+end
+
+file 'ext/config.h' do |t|
+  s = "/* config.h. Generated from Rakefile by rake. */\n"
+  if check_c_header 'libswscale/swscale.h'
     s << "#define HAVE_LIBSWSCALE_INCDIR 1\n"
   else
+    unless check_c_header 'ffmpeg/swscale.h'
+      raise 'Cannot find swscale.h header file'
+    end
     s << "#undef HAVE_LIBSWSCALE_INCDIR\n"
   end
   File.open( t.name, 'w' ) { |f| f.puts s }
