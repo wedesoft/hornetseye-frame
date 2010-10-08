@@ -13,8 +13,15 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 extern "C" {
+#ifndef HAVE_LIBSWSCALE_INCDIR
+  #include <ffmpeg/swscale.h>
+#else
   #include <libswscale/swscale.h>
+#endif
 }
 #undef RSHIFT
 #include "colourspace.hh"

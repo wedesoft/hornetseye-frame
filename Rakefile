@@ -5,6 +5,7 @@ require 'rake/testtask'
 require 'rake/packagetask'
 require 'rake/loaders/makefile'
 require 'rbconfig'
+require 'tempfile'
 
 PKG_NAME = 'hornetseye-frame'
 PKG_VERSION = '0.5.0'
@@ -28,7 +29,7 @@ HOMEPAGE = %q{http://wedesoft.github.com/hornetseye-frame/}
 
 OBJ = CC_FILES.ext 'o'
 $CXXFLAGS = ENV[ 'CXXFLAGS' ] || ''
-$CXXFLAGS = "#{$CXXFLAGS} -fPIC -DNDEBUG"
+$CXXFLAGS = "#{$CXXFLAGS} -fPIC -DNDEBUG -DHAVE_CONFIG_H"
 if RbConfig::CONFIG[ 'rubyhdrdir' ]
   $CXXFLAGS = "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'rubyhdrdir' ]} " +
               "-I#{RbConfig::CONFIG[ 'rubyhdrdir' ]}/#{RbConfig::CONFIG[ 'arch' ]}"
@@ -71,6 +72,49 @@ task :uninstall do
     end
     FileUtils.rm_f "#{$SITEARCHDIR}/#{File.basename SO_FILE}"
   end
+end
+
+desc 'Create config.h'
+task :config_h => 'ext/config.h'
+
+def check_program
+  f_base_name = 'rakeconf'
+  begin
+    File.open "#{f_base_name}.cc", 'w' do |f|
+      yield f
+    end
+    `#{CXX} -S #{$CXXFLAGS} -c -o #{f_base_name}.o #{f_base_name}.cc 2>&1 >> rake.log`
+    $?.exitstatus == 0
+  ensure
+    File.delete *Dir.glob( "#{f_base_name}.*" )
+  end
+end
+
+file 'ext/config.h' do |t|
+  s = "/* config.h. Generated from Rakefile by rake. */\n"
+  libswscale_incdir = check_program do |c|
+    c.puts <<EOS
+extern "C" {
+  #include <libswscale/swscale.h>
+}
+int main(void) { return 0; }
+EOS
+  end
+  if libswscale_incdir
+    s << "#define HAVE_LIBSWSCALE_INCDIR 1\n"
+  else
+    ffmpeg_incdir = check_program do |c|
+      c.puts <<EOS
+extern "C" {
+#include <ffmpeg/swscale.h>
+}
+int main(void) { return 0; }
+EOS
+    end
+    raise 'Could not find swscale.h header' unless ffmpeg_incdir
+    s << "#undef HAVE_LIBSWSCALE_INCDIR\n"
+  end
+  File.open( t.name, 'w' ) { |f| f.puts s }
 end
 
 Rake::TestTask.new do |t|
@@ -168,7 +212,7 @@ rule '.o' => '.cc' do |t|
    sh "#{CXX} #{$CXXFLAGS} -c -o #{t.name} #{t.source}"
 end
 
-file ".depends.mf" do |t|
+file ".depends.mf" => :config_h do |t|
   sh "g++ -MM #{$CXXFLAGS} #{CC_FILES.join ' '} | " +
     "sed -e :a -e N -e 's/\\n/\\$/g' -e ta | " +
     "sed -e 's/ *\\\\\\$ */ /g' -e 's/\\$/\\n/g' | sed -e 's/^/ext\\//' > #{t.name}"
@@ -179,5 +223,5 @@ end
 import ".depends.mf"
 
 CLEAN.include 'ext/*.o'
-CLOBBER.include SO_FILE, 'doc', '.yardoc', '.depends.mf'
+CLOBBER.include SO_FILE, 'doc', '.yardoc', '.depends.mf', 'ext/config.h'
 
