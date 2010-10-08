@@ -103,15 +103,6 @@ EOS
   if libswscale_incdir
     s << "#define HAVE_LIBSWSCALE_INCDIR 1\n"
   else
-    ffmpeg_incdir = check_program do |c|
-      c.puts <<EOS
-extern "C" {
-#include <ffmpeg/swscale.h>
-}
-int main(void) { return 0; }
-EOS
-    end
-    raise 'Could not find swscale.h header' unless ffmpeg_incdir
     s << "#undef HAVE_LIBSWSCALE_INCDIR\n"
   end
   File.open( t.name, 'w' ) { |f| f.puts s }
