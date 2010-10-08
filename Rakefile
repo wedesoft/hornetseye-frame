@@ -80,9 +80,7 @@ task :config_h => 'ext/config.h'
 def check_program
   f_base_name = 'rakeconf'
   begin
-    File.open "#{f_base_name}.cc", 'w' do |f|
-      yield f
-    end
+    File.open( "#{f_base_name}.cc", 'w' ) { |f| yield f }
     `#{CXX} -S #{$CXXFLAGS} -c -o #{f_base_name}.o #{f_base_name}.cc 2>&1 >> rake.log`
     $?.exitstatus == 0
   ensure
