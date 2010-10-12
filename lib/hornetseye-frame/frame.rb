@@ -57,6 +57,10 @@ module Hornetseye
         end
       end
 
+      def rgb?
+        true
+      end
+
     end
 
     attr_reader :memory
@@ -87,6 +91,10 @@ module Hornetseye
 
     def storage_size
       self.class.storage_size
+    end
+
+    def rgb?
+      self.class.rgb?
     end
 
     alias_method :orig_to_type, :to_type
