@@ -73,6 +73,10 @@ module Hornetseye
       "#{self.class.inspect}(#{ "0x%08x" % @memory.object_id })"
     end
 
+    def dup
+      self.class.new @memory.dup
+    end
+
     def typecode
       self.class.typecode
     end

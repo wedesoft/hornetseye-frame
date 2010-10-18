@@ -8,7 +8,7 @@ require 'rbconfig'
 require 'tempfile'
 
 PKG_NAME = 'hornetseye-frame'
-PKG_VERSION = '0.6.0'
+PKG_VERSION = '0.7.0'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -175,7 +175,7 @@ begin
     s.has_rdoc = 'yard'
     s.extra_rdoc_files = []
     s.rdoc_options = %w{--no-private}
-    s.add_dependency %q<malloc>, [ '~> 1.1' ]
+    s.add_dependency %<malloc>, [ '~> 1.1' ]
     s.add_dependency %<multiarray>, [ '~> 0.6' ]
   end
   GEM_BINARY = "#{PKG_NAME}-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
