@@ -61,6 +61,27 @@ module Hornetseye
         true
       end
 
+      def ==( other )
+        if other.is_a? Class
+          if other < Frame_
+            [ other.typecode, other.width, other.height ] ==
+              [ typecode, width, height ]
+          else
+            false
+          end
+        else
+          false
+        end
+      end
+
+      def hash
+        [ :Frame_, typecode, width, height ].hash
+      end
+
+      def eql?( other )
+        self == other
+      end
+
     end
 
     attr_reader :memory
