@@ -69,6 +69,13 @@ class TC_Frame < Test::Unit::TestCase
     assert_equal [ 320, 240 ], F( YV12, 320, 240 ).shape
   end
 
+  def test_frame_equal
+    assert_equal F( YV12, 320, 240 ), F( YV12, 320, 240 )
+    assert_not_equal F( YV12, 320, 240 ), F( YV12, 320, 200 )
+    assert_not_equal F( YV12, 320, 240 ), F( YV12, 240, 240 )
+    assert_not_equal F( YV12, 320, 240 ), F( I420, 320, 240 )
+  end
+
   def test_typecode
     assert_equal YV12, F.new( YV12, 320, 240 ).typecode
   end
