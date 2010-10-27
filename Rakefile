@@ -10,7 +10,6 @@ require 'tempfile'
 PKG_NAME = 'hornetseye-frame'
 PKG_VERSION = '0.8.0'
 CXX = ENV[ 'CXX' ] || 'g++'
-STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
 CC_FILES = FileList[ 'ext/*.cc' ]
 HH_FILES = FileList[ 'ext/*.hh' ] + FileList[ 'ext/*.tcc' ]
@@ -47,7 +46,6 @@ task :all => [ SO_FILE ]
 
 file SO_FILE => OBJ do |t|
    sh "#{CXX} -shared -o #{t.name} #{OBJ} -lswscale #{$LIBRUBYARG}"
-   sh "#{STRIP} --strip-all #{t.name}"
 end
 
 task :test => [ SO_FILE ]
