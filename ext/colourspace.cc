@@ -75,7 +75,6 @@ static void setupFormat( const string &typecode, int width, int height, char *me
   } else if ( typecode == "YUY2" ) {
     *format = PIX_FMT_YUYV422;
     int
-      width2 = ( width + 1 ) / 2,
       widtha = ( width + 3 ) & ~0x3;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = 2 * widtha;
