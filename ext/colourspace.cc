@@ -80,7 +80,7 @@ static void setupFormat( const string &typecode, int width, int height, char *me
     lineSize[ 0 ] = 2 * widtha;
   } else if ( typecode == "UYVY" ) {
     *format = PIX_FMT_UYVY422;
-    int widtha = ( width + 1 ) & ~0x1;
+    int widtha = ( width + 3 ) & ~0x3;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = 2 * widtha;
   } else {
