@@ -42,12 +42,17 @@ module Hornetseye
         when BGRA
           width * height * 4
         when UYVY
-          width * height * 2
+          widtha = ( width + 3 ) & ~0x3
+          widtha * height * 2
         when YUY2
           widtha = ( width + 3 ) & ~0x3
           widtha * height * 2
         when YV12
-          width * height * 3 / 2
+          width2  = ( width  + 1 ) / 2
+          height2 = ( height + 1 ) / 2
+          widtha  = ( width  + 7 ) & ~0x7
+          width2a = ( width2 + 7 ) & ~0x7
+          widtha * height + 2 * width2a * height2
         when I420
           width * height * 3 / 2
         when MJPG

@@ -8,7 +8,7 @@ require 'rbconfig'
 require 'tempfile'
 
 PKG_NAME = 'hornetseye-frame'
-PKG_VERSION = '0.8.0'
+PKG_VERSION = '0.8.1'
 CFG = RbConfig::CONFIG
 CXX = ENV[ 'CXX' ] || 'g++'
 RB_FILES = FileList[ 'lib/**/*.rb' ]

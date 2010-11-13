@@ -59,13 +59,13 @@ static void setupFormat( const string &typecode, int width, int height, char *me
     data[ 2 ] = (uint8_t *)memory + widtha * height;
     data[ 1 ] = (uint8_t *)data[ 2 ] + width2a * height2;
     lineSize[ 0 ] = widtha;
-    lineSize[ 1 ] = ( ( width + 1 ) / 2 + 7 ) & ~0x7;
-    lineSize[ 2 ] = ( ( width + 1 ) / 2 + 7 ) & ~0x7;
+    lineSize[ 1 ] = width2a;
+    lineSize[ 2 ] = width2a;
   } else if ( typecode == "I420" ) {
     *format = PIX_FMT_YUV420P;
     int
-      width2  = width / 2,
-      height2 = height / 2;
+      width2  = ( width  + 1 ) / 2,
+      height2 = ( height + 1 ) / 2;
     data[ 0 ] = (uint8_t *)memory;
     data[ 1 ] = (uint8_t *)memory + width * height;
     data[ 2 ] = (uint8_t *)data[ 1 ] + width2 * height2;
