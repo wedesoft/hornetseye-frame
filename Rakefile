@@ -8,7 +8,7 @@ require 'rbconfig'
 require 'tempfile'
 
 PKG_NAME = 'hornetseye-frame'
-PKG_VERSION = '0.8.1'
+PKG_VERSION = '0.8.2'
 CFG = RbConfig::CONFIG
 CXX = ENV[ 'CXX' ] || 'g++'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -28,7 +28,7 @@ EMAIL = %q{jan@wedesoft.de}
 HOMEPAGE = %q{http://wedesoft.github.com/hornetseye-frame/}
 
 OBJ = CC_FILES.ext 'o'
-$CXXFLAGS = "-DNDEBUG -DHAVE_CONFIG_H #{CFG[ 'CPPFLAGS' ]} #{CFG[ 'CFLAGS' ]}"
+$CXXFLAGS = "-DNDEBUG -DHAVE_CONFIG_H -D__STDC_CONSTANT_MACROS #{CFG[ 'CPPFLAGS' ]} #{CFG[ 'CFLAGS' ]}"
 if CFG[ 'rubyhdrdir' ]
   $CXXFLAGS = "#{$CXXFLAGS} -I#{CFG[ 'rubyhdrdir' ]} " + 
               "-I#{CFG[ 'rubyhdrdir' ]}/#{CFG[ 'arch' ]}"
