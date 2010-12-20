@@ -30,7 +30,7 @@ module Hornetseye
         elsif typecode < RGB_ and typecode != UBYTERGB
           to_type( UBYTERGB ).to_type target
         else
-          orig_to_type_with_frame target
+          memorise.orig_to_type_with_frame target
         end
       else
         to_type_without_frame target
