@@ -119,6 +119,10 @@ module Hornetseye
       self.class.height
     end
 
+    def memorise
+      self
+    end
+
     def storage_size
       self.class.storage_size
     end
