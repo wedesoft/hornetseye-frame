@@ -19,7 +19,7 @@ module Hornetseye
 
   class FourCC
 
-    def initialize( a, b, c, d )
+    def initialize(a, b, c, d = nil)
       @a, @b, @c, @d = a, b, c, d
     end
 
@@ -28,7 +28,7 @@ module Hornetseye
     end
 
     def to_s
-      "#{@a}#{@b}#{@c}#{@d}"
+      "#{@a}#{@b}#{@c}#{@d ? @d : ''}"
     end
 
     def to_str
@@ -41,13 +41,13 @@ module Hornetseye
 
   end
 
-  def FourCC( a, b, c, d )
+  def FourCC(a, b, c, d = nil)
     FourCC.new a, b, c, d
   end
 
   module_function :FourCC
 
-  BGR  = FourCC 'B', 'G', 'R', ' '
+  BGR  = FourCC 'B', 'G', 'R'
   BGRA = FourCC 'B', 'G', 'R', 'A'
   UYVY = FourCC 'U', 'Y', 'V', 'Y'
   YUY2 = FourCC 'Y', 'U', 'Y', '2'
