@@ -21,21 +21,21 @@ module Hornetseye
 
     class << self
 
-      attr_accessor :typecode, :width, :height
+      attr_accessor :typecode
 
       def inspect
         to_s
       end
 
       def to_s
-        "Frame(#{typecode},#{@width},#{@height})"
+        "Frame(#{typecode})"
       end
 
       def shape
         [ @width, @height ]
       end
 
-      def storage_size
+      def storage_size(width, height)
         case typecode
         when BGR
           width * height * 3
@@ -69,8 +69,7 @@ module Hornetseye
       def ==( other )
         if other.is_a? Class
           if other < Frame_
-            [ other.typecode, other.width, other.height ] ==
-              [ typecode, width, height ]
+            other.typecode == typecode
           else
             false
           end
@@ -80,7 +79,7 @@ module Hornetseye
       end
 
       def hash
-        [ :Frame_, typecode, width, height ].hash
+        [:Frame_, typecode].hash
       end
 
       def eql?( other )
@@ -89,14 +88,19 @@ module Hornetseye
 
     end
 
+    attr_reader :width
+
+    attr_reader :height
+
     attr_reader :memory
 
-    def initialize( value = nil )
-      @memory = value || Malloc.new( self.class.storage_size )
+    def initialize(width, height, options = {})
+      @width, @height = width, height
+      @memory = options[:memory] || Malloc.new(self.class.storage_size(width, height))
     end
 
     def inspect
-      "#{self.class.inspect}(#{ "0x%08x" % @memory.object_id })"
+      "#{self.class.inspect}(#{@width},#{@height},#{ "0x%08x" % @memory.object_id })"
     end
 
     def dup
@@ -111,20 +115,12 @@ module Hornetseye
       self.class.shape
     end
 
-    def width
-      self.class.width
-    end
-
-    def height
-      self.class.height
-    end
-
     def memorise
       self
     end
 
     def storage_size
-      self.class.storage_size
+      self.class.storage_size @width, @height
     end
 
     def rgb?
@@ -150,15 +146,13 @@ module Hornetseye
 
   end
 
-  def Frame( typecode, width, height )
+  def Frame(typecode)
     if typecode.is_a? FourCC
       retval = Class.new Frame_
       retval.typecode = typecode
-      retval.width = width
-      retval.height = height
       retval
     else
-      Hornetseye::MultiArray typecode, width, height
+      Hornetseye::MultiArray typecode, 2
     end
   end
 
@@ -168,16 +162,16 @@ module Hornetseye
 
     class << self
 
-      def new( typecode, width, height )
-        Hornetseye::Frame( typecode, width, height ).new
+      def new(typecode, width, height)
+        Hornetseye::Frame(typecode).new width, height
       end
 
-      def import( typecode, width, height, memory )
-        Hornetseye::Frame( typecode, width, height ).new memory
+      def import(typecode, width, height, memory)
+        Hornetseye::Frame(typecode).new width, height, :memory => memory
       end
 
-      def storage_size( typecode, width, height )
-        Hornetseye::Frame( typecode, width, height ).storage_size
+      def storage_size(typecode, width, height)
+        Hornetseye::Frame(typecode).storage_size width, height
       end
 
     end
