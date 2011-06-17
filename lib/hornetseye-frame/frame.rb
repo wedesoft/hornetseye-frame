@@ -31,10 +31,6 @@ module Hornetseye
         "Frame(#{typecode})"
       end
 
-      def shape
-        [ @width, @height ]
-      end
-
       def storage_size(width, height)
         case typecode
         when BGR
@@ -112,7 +108,7 @@ module Hornetseye
     end
 
     def shape
-      self.class.shape
+      [@width, @height]
     end
 
     def memorise
