@@ -14,7 +14,7 @@ Installation
 ------------
 *hornetseye-alsa* requires the software scaling library. If you are running Debian or (K)ubuntu, you can install it like this:
 
-    $ sudo aptitude install libswscale-dev
+    $ sudo aptitude install libswscale-dev libboost-dev
 
 To install this Ruby extension, use the following command:
 
