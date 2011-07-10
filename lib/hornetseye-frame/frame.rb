@@ -100,7 +100,7 @@ module Hornetseye
     end
 
     def dup
-      self.class.new @memory.dup
+      self.class.new @width, @height, :memory => @memory.dup
     end
 
     def typecode
