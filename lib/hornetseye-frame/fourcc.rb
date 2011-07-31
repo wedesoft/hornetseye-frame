@@ -35,6 +35,10 @@ module Hornetseye
       to_s
     end
 
+    def rgb?
+      true
+    end
+
     def ==( other )
       ( other.is_a? FourCC ) and ( other.inspect == inspect )
     end
