@@ -92,7 +92,7 @@ module Hornetseye
 
     def initialize(width, height, options = {})
       @width, @height = width, height
-      @memory = options[:memory] || Malloc.new(self.class.storage_size(width, height))
+      @memory = options[:memory] || Malloc.align(self.class.storage_size(width, height), 16)
     end
 
     def inspect
