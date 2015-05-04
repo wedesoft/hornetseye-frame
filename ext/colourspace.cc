@@ -95,13 +95,17 @@ FramePtr frameToType( const FramePtr in, const string &target ) throw (Error)
     height = in->height();
   FramePtr retVal( new Frame( target, width, height ) );
   enum PixelFormat sourceFormat;
-  uint8_t *sourceData[4];
-  int sourceLineSize[4];
+  uint8_t *sourceData[8];
+  memset(sourceData, 0, sizeof(sourceData));
+  int sourceLineSize[8];
+  memset(sourceLineSize, 0, sizeof(sourceLineSize));
   setupFormat( in->typecode(), width, height, in->data(),
                &sourceFormat, &sourceData[0], &sourceLineSize[0] );
   enum PixelFormat destFormat;
-  uint8_t *destData[4];
-  int destLineSize[4];
+  uint8_t *destData[8];
+  memset(destData, 0, sizeof(destData));
+  int destLineSize[8];
+  memset(destLineSize, 0, sizeof(destLineSize));
   setupFormat( retVal->typecode(), width, height, retVal->data(),
                &destFormat, &destData[0], &destLineSize[0] );
   SwsContext *swsContext = sws_getContext( width, height, sourceFormat,
