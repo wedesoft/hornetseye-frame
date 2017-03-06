@@ -1,7 +1,7 @@
 require 'rake'
 
 PKG_NAME = 'hornetseye-frame'
-PKG_VERSION = '1.1.1'
+PKG_VERSION = '1.1.2'
 CFG = RbConfig::CONFIG
 CXX = ENV[ 'CXX' ] || 'g++'
 RB_FILES = ['config.rb'] + FileList[ 'lib/**/*.rb' ]

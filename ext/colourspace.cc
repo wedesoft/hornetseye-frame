@@ -29,7 +29,7 @@ extern "C" {
 using namespace std;
 
 static void setupFormat( const string &typecode, int width, int height, char *memory,
-                         enum PixelFormat *format,
+                         enum AVPixelFormat *format,
                          uint8_t **data, int *lineSize ) throw (Error)
 {
   if ( typecode == "UBYTE" ) {
@@ -94,14 +94,14 @@ FramePtr frameToType( const FramePtr in, const string &target ) throw (Error)
     width = in->width(),
     height = in->height();
   FramePtr retVal( new Frame( target, width, height ) );
-  enum PixelFormat sourceFormat;
+  enum AVPixelFormat sourceFormat;
   uint8_t *sourceData[8];
   memset(sourceData, 0, sizeof(sourceData));
   int sourceLineSize[8];
   memset(sourceLineSize, 0, sizeof(sourceLineSize));
   setupFormat( in->typecode(), width, height, in->data(),
                &sourceFormat, &sourceData[0], &sourceLineSize[0] );
-  enum PixelFormat destFormat;
+  enum AVPixelFormat destFormat;
   uint8_t *destData[8];
   memset(destData, 0, sizeof(destData));
   int destLineSize[8];
