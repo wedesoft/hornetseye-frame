@@ -33,23 +33,23 @@ static void setupFormat( const string &typecode, int width, int height, char *me
                          uint8_t **data, int *lineSize ) throw (Error)
 {
   if ( typecode == "UBYTE" ) {
-    *format = PIX_FMT_GRAY8;
+    *format = AV_PIX_FMT_GRAY8;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = width;
   } else if ( typecode == "UBYTERGB" ) {
-    *format = PIX_FMT_RGB24;
+    *format = AV_PIX_FMT_RGB24;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = width * 3;
   } else if ( typecode == "BGR" ) {
-    *format = PIX_FMT_BGR24;
+    *format = AV_PIX_FMT_BGR24;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = width * 3;
   } else if ( typecode == "BGRA" ) {
-    *format = PIX_FMT_BGRA;
+    *format = AV_PIX_FMT_BGRA;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = width * 4;
   } else if ( typecode == "YV12" ) {
-    *format = PIX_FMT_YUV420P;
+    *format = AV_PIX_FMT_YUV420P;
     int
       width2  = ( width  + 1 ) / 2,
       height2 = ( height + 1 ) / 2,
@@ -62,7 +62,7 @@ static void setupFormat( const string &typecode, int width, int height, char *me
     lineSize[ 1 ] = width2a;
     lineSize[ 2 ] = width2a;
   } else if ( typecode == "I420" ) {
-    *format = PIX_FMT_YUV420P;
+    *format = AV_PIX_FMT_YUV420P;
     int
       width2  = ( width  + 1 ) / 2,
       height2 = ( height + 1 ) / 2;
@@ -73,13 +73,13 @@ static void setupFormat( const string &typecode, int width, int height, char *me
     lineSize[ 1 ] = width2;
     lineSize[ 2 ] = width2;
   } else if ( typecode == "YUY2" ) {
-    *format = PIX_FMT_YUYV422;
+    *format = AV_PIX_FMT_YUYV422;
     int
       widtha = ( width + 3 ) & ~0x3;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = 2 * widtha;
   } else if ( typecode == "UYVY" ) {
-    *format = PIX_FMT_UYVY422;
+    *format = AV_PIX_FMT_UYVY422;
     int widtha = ( width + 3 ) & ~0x3;
     data[ 0 ] = (uint8_t *)memory;
     lineSize[ 0 ] = 2 * widtha;
