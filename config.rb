@@ -19,6 +19,6 @@ DESCRIPTION = %q{This Ruby extension provides conversions for compressed colours
 LICENSE = 'GPL-3+'
 AUTHOR = %q{Jan Wedekind}
 EMAIL = %q{jan@wedesoft.de}
-HOMEPAGE = %q{http://wedesoft.github.com/hornetseye-frame/}
+HOMEPAGE = %q{http://wedesoft.github.io/hornetseye-frame/}
 
 
